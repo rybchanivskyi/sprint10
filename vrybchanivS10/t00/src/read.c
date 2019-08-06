@@ -1,12 +1,9 @@
-#include <fcntl.h>
-
-#include <stdlib.h>
-#include "printerr.h"
+#include "printfile.h"
 
 
 int main(int argc, char const *argv[]) {
     if (argc != 2) {
-        mx_printerr("usage: ./read_file [file_path]");
+        mx_printerr("usage: ./read_file [file_path]\n");
         return 0;
     }
     int file = open(argv[1], O_RDONLY);
@@ -14,11 +11,11 @@ int main(int argc, char const *argv[]) {
         mx_printerr("error\n");
         return 0;
     }
-    char s[128];
-    int n = read (file ,  s, 128);
+    char s[1];
+    int n = read (file ,  s, sizeof(s));
     while(n > 0) {
-               mx_printstr(s);
-               n = read (file ,  s, 128);
+               write(1,s,sizeof(s));
+               n = read (file ,  s, sizeof(s));
              }
     close(file);
     return 0;
